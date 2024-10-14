@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MANAGER TASK</title>
+    <link rel="stylesheet" href="{% static 'web/css/style.css' %}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/boxicons@2.0.9/css/boxicons.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Other head elements -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+</head>
+<body class="text-[#515151] w-[50%] mx-auto">
+    <div class="flex justify-between items-center">
+        <h1 class="text-center text-4xl pt-1">Tasks</h1>
+        <h4 class="col-span-2 bg-pink-500 text-white font-semibold py-1 px-2 rounded-md flex items-center hover:bg-pink-600 mr-2 justify-center">
+            <i class="fa-regular fa-user mr-2"></i> {{ user.first_name }}  {{ user.last_name }}
+        </h4>
+        <a href="{% url 'web:logout' %}" class="flex">
+            <i id="logout" class="fa-solid fa-right-from-bracket rotate-180"></i>
+            <p id="lo" class="font-bold"></p>
+        </a>
+    </div>
+    <secttion class="">
+        <div class="right">
+            <h5 class="mb-3 mt-5">Your Tasks</h5>
+            {% if tasks %}
+            {% for item in tasks %}
+            <ul class="bg-yellow-300 p-2 rounded-md grid grid-cols-7 items-center mb-2">
+                <li class="col-span-6">{{ item.task }}</li>
+                <a href="{% url 'web:item_done' item.id %}">
+                <li class="col-span-1 bg-green-500 text-white font-semibold py-1 px-2 rounded-md flex items-center hover:bg-green-600">
+                    <i class="fa fa-check-circle mr-2"></i> Done
+                </li>
+                </a>
+            </ul>
+            {% endfor %}
+            {% else %}
+            <h1>No Items</h1>
+            {% endif %}
+        </div>
+        <div class="right mt-8">
+            <h5 class="mb-2">Your Completed tasks</h5>
+            {% if donetasks %}
+            {% for item in donetasks %}
+            <ul class="bg-yellow-300 p-2 rounded-md grid grid-cols-9 items-center mb-2">
+                <li class="col-span-7">{{ item.task }}</li>
+                {% if item.is_verified %}
+                <li class="col-span-2 bg-green-500 text-white font-semibold py-1 px-2 rounded-md flex items-center hover:bg-green-600">
+                    <i class="fa fa-check-circle mr-2"></i>
+                        Verified
+                </li>
+                {% else %}
+                <li class="col-span-2 bg-red-500 text-white font-semibold py-1 px-2 rounded-md flex items-center hover:bg-red-600">
+                    <i class="fa-regular fa-circle-xmark text-white mr-2"></i>
+                        Not Verified
+                </li>
+                {% endif %}
+            </ul>
+            {% endfor %}
+            {% else %}
+            <h1>No Done Items</h1>
+            {% endif %}
+        </div>
+    </secttion>
+
+
+    <script src="{% static 'web/js/script.js' %}"></script>
+</body>
+</html>
